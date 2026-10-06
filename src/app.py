@@ -23,9 +23,15 @@ if st.button("Calculate Grade"):
         grade = "D"
     else:
         grade = "E"
+if average > 70 and average <= 100:
+    st.write("Excellent")
+elif average >= 50 and average <= 70:
+    st.write("Good")
+elif average < 50:
+    st.write("Needs Improvement")
 
-    st.subheader("Your Results")
-    st.write("Name:", name)
-    st.write("Total:", total)
+    st.subheader(f"{name}'s Results")
+    st.write("Total:", total, "/300")
     st.write("Average:", round(average, 2))
     st.write("Grade:", grade)
+    st.write("Status:", status)
