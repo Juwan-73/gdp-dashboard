@@ -4,10 +4,14 @@ st.title("🎓 Student Grade Checker")
 
 name = st.text_input("Enter your name")
 
-math = st.number_input("Mathematics", 0, 100)
-python = st.number_input("Python", 0, 100)
-statistics = st.number_input("Statistics", 0, 100)
-marks = [math, python, statistics]
+num_subjects =st.number_input("Number of subjects", min_value=1, 
+max_value=10, value=3)
+
+marks = []
+
+for i in range(num_subjects):
+    mark = st.number_input(f"Subject {i + 1}", 0, 100)
+    marks.append(mark)
 if st.button("Calculate Grade"):
 
     total = sum(marks)
@@ -31,7 +35,7 @@ if st.button("Calculate Grade"):
         status = "Needs Improvement"
 
     st.subheader(f"{name}'s Results")
-    st.write("Total:", total, f"/{300}")
+    st.write("Total:", total, f"/{len(marks) * 100}")
     st.write("Average:", round(average, 2))
     st.write("Grade:", grade)
     st.write("Status:", status)
