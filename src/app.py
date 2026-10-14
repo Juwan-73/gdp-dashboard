@@ -1,17 +1,34 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="🎓 Student Grade Checker",
+    page_icon="🎓",
+    layout="centered"
+)
 st.title("🎓 Student Grade Checker")
+st.write("Welcome! Enter your details and marks below to calculate your results.")
+st.divider()
 
-name = st.text_input("Enter your name")
+st.subheader("Enter Your Marks")
+st.caption("Choose the number of subjects then enter each mark out of 100.")
 
-num_subjects =st.number_input("Number of subjects", min_value=1, 
-max_value=10, value=3)
+col1, col2 =st.columns(2)
+with col1:
+    name = st.text_input("Enter Your Name")
+                         
+with col2:
+    num_subjects = st.number_input(
+    "Number of subjects", min_value=1,
+  max_value=10, value=3
+)
 
 marks = []
 
 for i in range(num_subjects):
     mark = st.number_input(f"Subject {i + 1}", 0, 100)
     marks.append(mark)
+st.divider()
+
 if st.button("Calculate Grade"):
 
     total = sum(marks)
@@ -35,7 +52,16 @@ if st.button("Calculate Grade"):
         status = "Needs Improvement"
 
     st.subheader(f"{name}'s Results")
-    st.write("Total:", total, f"/{len(marks) * 100}")
-    st.write("Average:", round(average, 2))
-    st.write("Grade:", grade)
-    st.write("Status:", status)
+    
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Total Marks", f"{total}/{len(marks) * 100}")
+    col2.metric("Average", round(average, 2))
+    col3.metric("Grade", grade)
+    
+    if status == "Excellent":
+        st.success(f"Status: {status}")
+    elif status == "Good":
+        st.info(f"Status: {status}")
+    else:
+        st.warning(f"Status: {status}")
